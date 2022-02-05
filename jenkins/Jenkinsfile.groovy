@@ -1,5 +1,18 @@
 #!/usr/bin/env groovy
 
+/*
+####################
+# CREDS
+####################
+*/
+def UNAME_PWD_ID = "UNAME_PWD_CRED"
+def SSH_KEY_ID = "SSH_CRED"
+
+/*
+####################
+# PIPELINE
+####################
+*/
 pipeline {
   agent none
   environment {
@@ -16,58 +29,47 @@ pipeline {
     timeout(unit: 'SECONDS', time: 10)
   }
   stages {
-    stage('Testing') {
+    stage('Building') {
       agent { label "build" }
       environment {
-        EXAMPLE_CREDS = credentials('6a96e553-fa12-489a-abb4-1488f5f4f616')
+        EXAMPLE_CREDS = credentials("UNAME_PWD_CRED")
       }
       steps {
         parallel (
           "Taskone" : {
             script {
-              try {
-                buildTask1()
-              } catch (Exception e) {
-                echo "buildTask1: This is Error" + e.toString()
-              }
+              try { buildTask1() }
+              catch (Exception e) { echo "buildTask1: This is Error" + e.toString() }
             }
           },
           "Tasktwo" : {
             script {
-              try {
-                buildTask2()
-              } catch (Exception e) {
-                echo "buildTask2: This is Error" + e.toString()
-              }
+              try { buildTask2() }
+              catch (Exception e) { echo "buildTask2: This is Error" + e.toString() }
             }
           }
         )
-      //steps {
-        //sh('echo ${EXAMPLE_CREDS_USR}:${EXAMPLE_CREDS_PSW}')
+      //steps { sh('echo ${EXAMPLE_CREDS_USR}:${EXAMPLE_CREDS_PSW}') }
       }
     }
-    stage('Deploy') {
-      agent { label "prod" }
+    stage('Testing') {
+      agent { label "test" }
       environment {
-        SSH_CREDS = credentials('ssh-prkey')
+        SSH_CREDS = credentials("SSH_CRED")
         CRED_PWD = "${params.password}"
       }
       steps {
         parallel (
           "Taskone" : {
             script {
-              try {
-                deployTask1()
-              } catch (Exception e) {
-                echo "deployTask1: This is Error" + e.toString()
-              }
+              try { deployTask1() }
+              catch (Exception e) { echo "deployTask1: This is Error" + e.toString() }
             }
           },
           "Tasktwo" : {
             script {
-              try {
-                deployTask2("${params.password}")
-              } catch (Exception e) {
+              try { deployTask2("${params.password}") }
+              catch (Exception e) {
                 echo "deployTask2: This is Error " + e.toString()
                 currentBuild.result = "FAILURE"
                 //catch (err) {echo err.getMessage()}
@@ -84,9 +86,7 @@ pipeline {
       //sh('wrong command intentional')
     }
     success {
-      script {
-        echo "success"
-      }
+      script { echo "success" }
     }
     failure {
       echo "This is Error handling in post"
@@ -94,6 +94,11 @@ pipeline {
   }
 }
 
+/*
+####################
+# FUNCTIONS
+####################
+*/
 def buildTask1() {
   sh('echo "Example User is $EXAMPLE_CREDS_USR"')
   sh('echo "Example Password is $EXAMPLE_CREDS_PSW"')
