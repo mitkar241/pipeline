@@ -1,4 +1,4 @@
-# jenkins
+# Jenkins
 ---
 Repo for Jenkinsfiles and tutorials
 
