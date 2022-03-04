@@ -1,10 +1,10 @@
 ## Add Credentials
 ---
 - click on `Manage Jenkins`
-- `Manage Credentials`
-- `Jenkins`
-- `Global credentials (unrestricted)`
-- `Add Credentials`
+- click on `Manage Credentials`
+- click on `Jenkins`
+- click on `Global credentials (unrestricted)`
+- click on `Add Credentials`
 
 to read private key -
 ```bash

@@ -1,5 +1,8 @@
 # JENKINS_HOME
 ---
+
+default value = `/var/lib/jenkins/`
+
 ## .ssh
 ---
 copy `.ssh` from home directory to `JENKINS_HOME` 
