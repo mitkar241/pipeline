@@ -1,6 +1,7 @@
 # Jenkins
 ---
-Repo for Jenkinsfiles and tutorials
+
+![jenkins-logo](https://www.jenkins.io/images/logo-title-opengraph.png)
 
 ## Suggested PlugIns
 ---
@@ -10,8 +11,8 @@ Repo for Jenkinsfiles and tutorials
 - [ ] Credentials Binding
 - [ ] Timestamper
 - [ ] Workspace Cleanup
-- [ ] Ant
-- [ ] Gradle
+- [x] Ant
+- [x] Gradle
 - [ ] Pipeline
 - [ ] GitHub Branch Source
 - [ ] Pipeline: GitHub Groovy Libraries
