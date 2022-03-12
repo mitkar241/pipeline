@@ -5,6 +5,11 @@
 
 ## Suggested PlugIns
 ---
+
+not all of these plugins would be needed.
+
+some to be added to list are- blueocean, rbac etc
+
 - [ ] Folders
 - [ ] OWASP Markup Formatter
 - [ ] Build Timeout
