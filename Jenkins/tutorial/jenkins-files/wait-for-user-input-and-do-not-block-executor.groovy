@@ -1,5 +1,5 @@
 pipeline {
-  agent none // agent can only be overwritten if the initial value is 'none'
+  agent none
   stages {
 
     stage('Stage 1') {
