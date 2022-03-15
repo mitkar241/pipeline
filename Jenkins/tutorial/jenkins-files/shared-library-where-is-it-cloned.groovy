@@ -11,7 +11,6 @@ library(
 pipeline {
   agent any
   stages {
-
     stage('Where is Jenkins Shared Library cloned') {
       steps {
         script {

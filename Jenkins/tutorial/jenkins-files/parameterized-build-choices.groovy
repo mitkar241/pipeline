@@ -10,7 +10,7 @@ pipeline {
   }
 
   stages {
-    stage("Wat") {
+    stage("Env Selection") {
       steps {
         echo "selectedEnvironment: ${params.environment}"
       }

@@ -1,7 +1,6 @@
 pipeline {
   agent any
   stages {
-
     stage('Stage 2') {
       agent none
       steps {
@@ -19,6 +18,5 @@ pipeline {
         }
       }
     }
-
   }
 }

@@ -1,5 +1,3 @@
-// docs: https://jenkins.io/doc/pipeline/steps/credentials-binding/
-
 pipeline {
   agent any
   stages {
