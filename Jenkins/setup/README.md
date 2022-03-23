@@ -27,4 +27,4 @@ sudo apt install ./jenkins_2.319.3_all.deb
 Jenkins is available as a snap package in all currently supported versions of Ubuntu. To install it open the terminal and type:
 ```bash
 sudo snap install jenkins --classic
-``
+```
