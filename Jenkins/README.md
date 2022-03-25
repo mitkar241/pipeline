@@ -3,7 +3,7 @@
 
 ![jenkins-logo](https://www.jenkins.io/images/logo-title-opengraph.png)
 
-## Suggested PlugIns
+## Suggested PlugIns (Plugins that are suggested by default)
 ---
 
 not all of these plugins would be needed.
