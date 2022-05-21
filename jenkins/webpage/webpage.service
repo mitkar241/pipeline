@@ -1,0 +1,15 @@
+[Unit]
+Description=webpage for public access
+Documentation=https://mitkar-webpage.com
+After=network.target
+
+[Service]
+Environment=NODE_PORT=5001
+Type=simple
+#User=mitkar
+ExecStart=/usr/bin/node /home/mitkar/webpage/server.js
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+

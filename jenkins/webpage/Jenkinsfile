@@ -1,0 +1,127 @@
+pipeline {
+  agent any
+  stages {
+    stage('init') {
+      agent any
+      steps {
+        echo 'checking instance availability'
+      }
+    }
+
+    stage('test') {
+      parallel {
+        stage('test alpha - print node version') {
+          agent {
+            node {
+              label 'test && alpha'
+            }
+
+          }
+          steps {
+            echo 'checking config in test alpha agent'
+            sh 'node --version'
+          }
+        }
+
+        stage('test alpha - refresh server directory') {
+          agent {
+            node {
+              label 'test && alpha'
+            }
+
+          }
+          steps {
+            sh 'mkdir -p /home/mitkar/html-webserver-nodejs-systemd-onprem/'
+            sh 'cp mitkar-public.service /home/mitkar/html-webserver-nodejs-systemd-onprem/; cp -r public /home/mitkar/html-webserver-nodejs-systemd-onprem/; cp server.js /home/mitkar/html-webserver-nodejs-systemd-onprem/'
+            sh 'cd /home/mitkar/html-webserver-nodejs-systemd-onprem/'
+          }
+        }
+
+        stage('test alpha - refresh webservers') {
+          agent {
+            node {
+              label 'test && alpha'
+            }
+
+          }
+          steps {
+            sh 'mkdir -p  ~/.config/systemd/user/'
+            sh 'cp mitkar-public.service ~/.config/systemd/user/mitkar-public.service'
+            sh 'systemctl --user daemon-reload'
+            sh 'systemctl --user enable --now mitkar-public.service'
+            sh 'systemctl --user status mitkar-public.service'
+          }
+        }
+
+        stage('test beta - print node version') {
+          agent {
+            node {
+              label 'test && beta'
+            }
+
+          }
+          steps {
+            echo 'checking config in test beta agent'
+            sh 'node --version'
+          }
+        }
+
+        stage('test beta - refresh server directory') {
+          agent {
+            node {
+              label 'test && beta'
+            }
+
+          }
+          steps {
+            sh 'mkdir -p /home/mitkar/html-webserver-nodejs-systemd-onprem/'
+            sh 'cp mitkar-public.service /home/mitkar/html-webserver-nodejs-systemd-onprem/; cp -r public /home/mitkar/html-webserver-nodejs-systemd-onprem/; cp server.js /home/mitkar/html-webserver-nodejs-systemd-onprem/'
+            sh 'cd /home/mitkar/html-webserver-nodejs-systemd-onprem/'
+          }
+        }
+
+        stage('test beta - refresh webserver') {
+          agent {
+            node {
+              label 'test && beta'
+            }
+
+          }
+          steps {
+            sh 'mkdir -p  ~/.config/systemd/user/'
+            sh 'cp mitkar-public.service ~/.config/systemd/user/mitkar-public.service'
+            sh 'systemctl --user daemon-reload'
+            sh 'systemctl --user enable --now mitkar-public.service'
+            sh 'systemctl --user status mitkar-public.service'
+          }
+        }
+
+      }
+    }
+
+    stage('dev') {
+      agent {
+        node {
+          label 'dev && alpha'
+        }
+
+      }
+      steps {
+        sh 'java --version'
+      }
+    }
+
+    stage('prod') {
+      agent {
+        node {
+          label 'prod && beta'
+        }
+
+      }
+      steps {
+        sh 'node --version'
+      }
+    }
+
+  }
+}
