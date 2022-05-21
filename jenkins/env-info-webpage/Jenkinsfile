@@ -1,0 +1,89 @@
+pipeline {
+  agent none
+  stages {
+    stage('init') {
+      parallel {
+        stage('init') {
+          agent any
+          steps {
+            echo 'initializing ENV variables ...'
+            sh 'pwd'
+          }
+        }
+
+        stage('version check') {
+          agent any
+          steps {
+            sh 'python3 --version'
+          }
+        }
+
+        stage('success message') {
+          agent any
+          steps {
+            echo 'init done'
+          }
+        }
+
+      }
+    }
+
+    stage('build in dev') {
+      agent {
+        node {
+          label 'agent.dev.mitkar.tech'
+        }
+
+      }
+      steps {
+        echo 'building the app ...'
+        sh 'python3 --version'
+        sh 'sudo service ufw restart'
+      }
+    }
+
+    stage('testing app') {
+      agent {
+        node {
+          label 'agent.test.mitkar.tech'
+        }
+
+      }
+      steps {
+        echo 'testing the app ...'
+        sh 'python3 --version'
+      }
+    }
+
+    stage('prod deploy') {
+      parallel {
+        stage('prod deploy') {
+          agent {
+            node {
+              label 'agent.prod.mitkar.tech'
+            }
+
+          }
+          steps {
+            echo 'deploying the app ...'
+            sh 'python3 --version'
+          }
+        }
+
+        stage('status msg') {
+          agent {
+            node {
+              label 'agent.prod.mitkar.tech'
+            }
+
+          }
+          steps {
+            echo 'deployment success'
+          }
+        }
+
+      }
+    }
+
+  }
+}
