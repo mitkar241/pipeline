@@ -1,3 +1,3 @@
-# pipeline
+# Pipeline
 ---
-Repo for CI/CD files and tutorials
+CI/CD pipeline, tools and tutorials
